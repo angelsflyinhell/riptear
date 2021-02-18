@@ -1,4 +1,1 @@
-inner -> demo
-    nar -> demoVar = nothing<s>more<s>actually
-    is? -> demoVar == nothing -> true -> print = this<s>is<s>true<br>with<s>a<s>new<s>line -> false -> print = false -> default -> print = default
-innerEnd
+var demo = "really just text"

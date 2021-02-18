@@ -27,7 +27,7 @@ public class Printer {
         System.out.println("(C) Copyright       angelsflyinhell");
         System.out.println("GitHub              https://github.com/angelsflyinhell");
         System.out.println("Website             https://4c3711.xyz");
-        System.out.println("Repository          https://github.com/angelsflyinhell/riptear");
+        System.out.println("Repository          https://github.com/angelsflyinhell/riptear\n\n");
     }
 
     public static void printReady() {

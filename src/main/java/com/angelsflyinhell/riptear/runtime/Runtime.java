@@ -1,10 +1,10 @@
 package com.angelsflyinhell.riptear.runtime;
 
-import com.angelsflyinhell.riptear.utilities.MemoryUtils;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Runtime {
 
@@ -12,6 +12,7 @@ public class Runtime {
     public static HashMap<String, String> VARIABLES = new HashMap<>();
     public static HashMap<String, String> CASES = new HashMap<>();
     public static boolean EXECUTE = false;
+    public static boolean SWITCH = false;
 
     public static void std(String path) {
         try {
@@ -27,50 +28,44 @@ public class Runtime {
     }
 
     public static void handleInput(String in) {
-        String[] args = in.replaceAll("\\s", "").split("->| ");
-        System.out.println(Arrays.toString(args));
-        switch (args[0]) {
-            case "inner":
-                EXECUTE = true;
-                break;
-            case "innerEnd":
-                EXECUTE = false;
-                break;
-            case "nar":
-                if (!EXECUTE)
-                    break;
-                String[] split = args[1].split("=");
-                VARIABLES.put(split[0], split[1]);
-                break;
-            case "is?":
-                CASES.put("state", args[1]);
-                break;
-            case "true":
-                CASES.put("true", "searching");
-                break;
-            case "false":
-                CASES.put("false", "searching");
-                break;
-            case "default":
-                CASES.put("default", "searching");
-                break;
-            case "b":
+        String trigger = "\\bif|then|else|print|var\\b";
 
-                break;
-            case "is?End":
+        Pattern pattern = Pattern.compile(trigger, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(in);
 
-                break;
-            case "print":
-                System.out.println(resolveTags(args[1]));
-                break;
-            default:
-                System.out.println("yea");
-                if(CASES.containsValue("searching")) {
-                    CASES.put(MemoryUtils.getKeyByValue(CASES, "searching"), Arrays.toString(args));
-                    System.out.println("wwwwwwww" + CASES.get("true"));
-                }
-                break;
+        while (matcher.find())
+        {
+            System.out.println(matcher.group() + " | " + in);
         }
+
+//        String[] args = in.replaceAll("\\s", "").split(">>");
+//        System.out.println(Arrays.toString(args));
+//        switch (args[0]) {
+//            case "inner":
+//                EXECUTE = true;
+//                break;
+//            case "innerEnd":
+//                EXECUTE = false;
+//                break;
+//            case "check?":
+//                SWITCH = true;
+//                break;
+//            case "check?End":
+//                SWITCH = false;
+//                break;
+//            case "var":
+//                String[] innerAttrib = in.split(">>");
+//                VARIABLES.put(innerAttrib[1].replaceAll(" ", ""), innerAttrib[2].replaceFirst(" ", ""));
+//                break;
+//            case "print":
+//
+//                String[] outs = in.split(">>");
+//                if (VARIABLES.containsKey(outs[1].replaceFirst(" ", "")))
+//                    System.out.println(VARIABLES.get(outs[1].replaceFirst(" ", "")));
+//                else
+//                    System.out.println(outs[1].replaceFirst(" ", ""));
+//                break;
+//        }
     }
 
     public static String resolveTags(String in) {
