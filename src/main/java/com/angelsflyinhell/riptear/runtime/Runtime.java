@@ -1,5 +1,7 @@
 package com.angelsflyinhell.riptear.runtime;
 
+import com.angelsflyinhell.riptear.utilities.MemoryUtils;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ public class Runtime {
 
     public static HashMap<String, String> TOKENS = new HashMap<>();
     public static HashMap<String, String> VARIABLES = new HashMap<>();
+    public static HashMap<String, String> CASES = new HashMap<>();
     public static boolean EXECUTE = false;
 
     public static void std(String path) {
@@ -25,7 +28,7 @@ public class Runtime {
 
     public static void handleInput(String in) {
         String[] args = in.replaceAll("\\s", "").split("->| ");
-//        System.out.println(Arrays.toString(args));
+        System.out.println(Arrays.toString(args));
         switch (args[0]) {
             case "inner":
                 EXECUTE = true;
@@ -34,13 +37,22 @@ public class Runtime {
                 EXECUTE = false;
                 break;
             case "nar":
-                if(!EXECUTE)
+                if (!EXECUTE)
                     break;
                 String[] split = args[1].split("=");
                 VARIABLES.put(split[0], split[1]);
                 break;
             case "is?":
-
+                CASES.put("state", args[1]);
+                break;
+            case "true":
+                CASES.put("true", "searching");
+                break;
+            case "false":
+                CASES.put("false", "searching");
+                break;
+            case "default":
+                CASES.put("default", "searching");
                 break;
             case "b":
 
@@ -48,7 +60,21 @@ public class Runtime {
             case "is?End":
 
                 break;
+            case "print":
+                System.out.println(resolveTags(args[1]));
+                break;
+            default:
+                System.out.println("yea");
+                if(CASES.containsValue("searching")) {
+                    CASES.put(MemoryUtils.getKeyByValue(CASES, "searching"), Arrays.toString(args));
+                    System.out.println("wwwwwwww" + CASES.get("true"));
+                }
+                break;
         }
+    }
+
+    public static String resolveTags(String in) {
+        return in.replaceAll("<s>", " ").replaceAll("<br>", "\n");
     }
 
     public static void initTokens() {

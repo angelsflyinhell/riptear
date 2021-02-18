@@ -1,14 +1,4 @@
 inner -> demo
-    nar -> demoVar = nothing
-    is? -> demoVar == nothing
-        true
-
-        b
-        false
-
-        b
-        default
-
-        b
-    is?End
+    nar -> demoVar = nothing<s>more<s>actually
+    is? -> demoVar == nothing -> true -> print = this<s>is<s>true<br>with<s>a<s>new<s>line -> false -> print = false -> default -> print = default
 innerEnd
