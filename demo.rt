@@ -1,0 +1,14 @@
+inner -> demo
+    nar -> demoVar = nothing
+    is? -> demoVar == nothing
+        true
+
+        b
+        false
+
+        b
+        default
+
+        b
+    is?End
+innerEnd
